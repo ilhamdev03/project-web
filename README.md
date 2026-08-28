@@ -1,1 +1,535 @@
-# project-web
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tentang Saya — RPL Journey</title>
+
+<style>
+  :root{
+    --bg: #0d0d0d;
+    --panel: #161616;
+    --line: #2b2b2b;
+    --text: #e8e8e8;
+    --muted: #8a8a8a;
+    --bright: #ffffff;
+  }
+
+  *{
+    box-sizing:border-box;
+  }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', 'Segoe UI', sans-serif;
+    line-height:1.6;
+  }
+
+  .mono{
+    font-family:'JetBrains Mono','Courier New',monospace;
+  }
+
+  .wrap{
+    max-width:720px;
+    margin:0 auto;
+    padding:64px 24px 96px;
+  }
+
+  /* ===== Terminal window ===== */
+
+  .terminal{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .terminal-bar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 16px;
+    background:#1f1f1f;
+    border-bottom:1px solid var(--line);
+  }
+
+  .terminal-title{
+    margin-left:8px;
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .terminal-body{
+    padding:28px 24px 32px;
+    font-size:15px;
+  }
+
+  /* ===== Hero ===== */
+
+  .hero-box{
+    border:1px solid #444;
+    border-radius:8px;
+    padding:28px 24px;
+    background:#111;
+  }
+
+  .create{
+    display:flex;
+    align-items:center;
+    color:var(--bright);
+    font-family:'JetBrains Mono','Courier New',monospace;
+    font-size:28px;
+    font-weight:600;
+    margin-bottom:14px;
+  }
+
+  .role{
+    color:var(--muted);
+    font-size:14px;
+    font-family:'JetBrains Mono','Courier New',monospace;
+  }
+
+  .caret{
+    display:inline-block;
+    width:8px;
+    height:26px;
+    background:var(--bright);
+    margin-left:6px;
+    animation:blink 1s steps(1) infinite;
+  }
+
+  @keyframes blink{
+    50%{
+      opacity:0;
+    }
+  }
+
+  /* ===== Section ===== */
+
+  section{
+    margin-top:56px;
+  }
+
+  .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--muted);
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    border-left:2px solid var(--line);
+    padding-left:10px;
+    margin-bottom:16px;
+  }
+
+  h2{
+    font-size:20px;
+    margin:0 0 14px;
+    font-weight:600;
+    color:var(--bright);
+  }
+
+  /* ===== Typing effect ===== */
+
+  .typing-title{
+    display:inline-block;
+    border-right:2px solid var(--bright);
+    padding-right:5px;
+    animation:cursorBlink 0.8s steps(1) infinite;
+  }
+
+  @keyframes cursorBlink{
+    50%{
+      border-color:transparent;
+    }
+  }
+
+  p{
+    color:var(--text);
+    font-size:15px;
+  }
+
+  .comment{
+    color:var(--muted);
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+  }
+
+  /* ===== Skills ===== */
+
+  .skills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:4px;
+  }
+
+  .skill{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    padding:8px 14px;
+    border:1px solid var(--line);
+    border-radius:6px;
+    background:var(--panel);
+    color:var(--text);
+    transition:border-color .2s ease, transform .2s ease;
+  }
+
+  .skill:hover{
+    border-color:var(--bright);
+    transform:translateY(-2px);
+  }
+
+  /* ===== Contact ===== */
+
+  .contact-box{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:22px 24px;
+  }
+
+  .contact-row{
+    display:flex;
+    gap:10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13.5px;
+    padding:6px 0;
+    border-bottom:1px dashed var(--line);
+  }
+
+  .contact-row:last-child{
+    border-bottom:none;
+  }
+
+  .contact-key{
+    color:var(--muted);
+    width:100px;
+    flex-shrink:0;
+  }
+
+  .contact-val{
+    color:var(--text);
+  }
+
+  .contact-val a{
+    color:var(--bright);
+    text-decoration:none;
+    border-bottom:1px solid var(--line);
+  }
+
+  .contact-val a:hover{
+    border-color:var(--bright);
+  }
+
+  /* ===== Footer ===== */
+
+  footer{
+    margin-top:64px;
+    text-align:center;
+    color:var(--muted);
+    font-size:12px;
+  }
+
+  /* ===== Responsive ===== */
+
+  @media(max-width:600px){
+
+    .wrap{
+      padding:32px 16px 64px;
+    }
+
+    .terminal-body{
+      padding:20px;
+    }
+
+    .hero-box{
+      padding:22px 18px;
+    }
+
+    .create{
+      font-size:21px;
+    }
+
+    .role{
+      font-size:12px;
+    }
+
+    .caret{
+      height:21px;
+      width:6px;
+    }
+
+    .contact-row{
+      flex-direction:column;
+      gap:2px;
+    }
+  }
+
+</style>
+</head>
+
+
+<body>
+
+<div class="wrap">
+
+<!-- ================= HERO ================= -->
+
+<div class="terminal">
+
+  <div class="terminal-bar">
+    <div class="terminal-title">
+      PROJECT WEB's
+    </div>
+  </div>
+
+  <div class="terminal-body">
+
+    <div class="hero-box">
+
+      <div class="create">
+        <span id="typed-name"></span>
+        <span class="caret"></span>
+      </div>
+
+      <div class="role mono">
+        SMK · RPL (Rekayasa Perangkat Lunak)
+        About Me, Skills & Contact
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section>
+
+  <div class="tag">
+    01 · Tentang
+  </div>
+
+  <h2>
+    <span class="typing-title" id="typing-title-1"></span>
+  </h2>
+
+  <p>
+    Halo, Nama saya Ilham.
+  </p>
+
+  <p>
+    Saya adalah seorang siswa SMK yang mengambil jurusan Rekayasa Perangkat Lunak (RPL).
+    Di sini saya belajar dasar-dasar pemrograman, mulai dari menulis HTML sederhana di VS Code
+    sampai memahami bagaimana CSS dan JavaScript bisa membuat sebuah halaman jadi lebih hidup
+    — seperti website ini.
+    Website ini adalah salah satu bentuk latihan saya dalam belajar membangun tampilan web yang rapi dan interaktif.
+    Dan alasan saya memiliki ketertarikan yang lebih besar pada web development.
+    dikarenakan saya cukup menikmati proses mengubah kode menjadi sebuah website,
+    yang dapat langsung dilihat dan digunakan.
+    Dan mudah mudahan suatu hari nanti saya bisa membuat halaman website yang bisa bermanfaat bagi orang2.
+    Selain itu di sekolah saya mulai mempelajari logika pemrograman, database, SQL/MariaDB, 
+    serta pengembangan aplikasi dan game menggunakan Unity.
+    Saya secara pribadi juga masih dalam tahap belajar dan masih perlu untuk belajar banyak hal,
+    Untuk mengasah kemampuan di bidang website development, 
+    tetapi saya percaya bahwa setiap project yang saya buat adalah bagian dari perjalanan saya untuk terus menjadi lebih baik kedepannya.
+  </p>
+
+</section>
+
+
+<!-- ================= SKILLS ================= -->
+
+<section>
+
+  <div class="tag">
+    02 · Skill & Tools
+  </div>
+
+  <h2>
+    <span class="typing-title" id="typing-title-2"></span>
+  </h2>
+
+  <div class="skills">
+
+    <span class="skill">HTML</span>
+    <span class="skill">CSS (dasar)</span>
+    <span class="skill">JavaScript (dasar)</span>
+    <span class="skill">VS Code (Penulis Kode) </span>
+    <span class="skill">Notepad++ (Penulis Kode)</span>
+    <span class="skill">Database (SQL/MariaDB)</span>
+    <span class="skill">Unity (dasar)</span>
+    <span class="skill">Logika pemrograman/coding</span>
+
+  </div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section>
+
+  <div class="tag">
+    03 · My social media & contact
+  </div>
+
+  <h2>
+    <span class="typing-title" id="typing-title-3"></span>
+  </h2>
+
+  <div class="contact-box mono">
+
+    <div class="contact-row">
+      <div class="contact-key">NAMA...</div>
+      <div class="contact-val">Ilham</div>
+    </div>
+
+    <div class="contact-row">
+      <div class="contact-key">INSTANSI...</div>
+      <div class="contact-val">
+        SMKN 2 TAKALAR — RPL
+      </div>
+    </div>
+
+    <div class="contact-row">
+      <div class="contact-key">EMAIL...</div>
+      <div class="contact-val">
+        <a href="mailto:tabailham08@gmail.com">
+          tabailham08@gmail.com
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-row">
+      <div class="contact-key">INSTAGRAM...</div>
+      <div class="contact-val">
+        <a href="https://www.instagram.com/1llhhm">
+          @1llhhm
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-row">
+    </div class="contact-rey">
+      <div class="contact-key">GITHUB...</div>
+      <div class="contact-val">
+        <a href=>
+          Comming Soon
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+  website ini dibuat dengan HTML, CSS & sedikit JavaScript.
+  Deployed Date: 26 Agustus 2026
+  Creator:Ilham's
+  VScode Studio!
+</footer>
+
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+  /* ===== Typing "Create: Ilham's" ===== */
+
+  const text = "SELAMAT DATANG DI WEBSITE PORTOFOLIO SAYA";
+
+  const typedName = document.getElementById("typed-name");
+
+  let index = 0;
+
+  function typeText(){
+
+    if(index < text.length){
+
+      typedName.textContent += text.charAt(index);
+
+      index++;
+
+      setTimeout(typeText, 100);
+
+    }
+
+  }
+
+  setTimeout(typeText, 500);
+
+
+  /* ===== Typing Section Titles ===== */
+
+  function typeTitle(element, text, speed, callback){
+
+    let index = 0;
+
+    function type(){
+
+      if(index < text.length){
+
+        element.textContent += text.charAt(index);
+
+        index++;
+
+        setTimeout(type, speed);
+
+      } else if(callback){
+
+        callback();
+
+      }
+
+    }
+
+    type();
+
+  }
+
+
+  const title1 = document.getElementById("typing-title-1");
+  const title2 = document.getElementById("typing-title-2");
+  const title3 = document.getElementById("typing-title-3");
+
+
+  setTimeout(() => {
+
+    typeTitle(title1, "Perjalanan di RPL", 90, () => {
+
+      setTimeout(() => {
+
+        typeTitle(title2, "Skill & Tools", 90, () => {
+
+          setTimeout(() => {
+
+            typeTitle(title3, "Hubungi Saya", 90);
+
+          }, 700);
+
+        });
+
+      }, 700);
+
+    });
+
+  }, 1200);
+
+</script>
+
+
+</body>
+</html># project-web
